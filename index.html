@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My PWA</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Apple Touch Icons -->
+  <link rel="apple-touch-icon" sizes="120x120" href="icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon-180x180.png">
+
+  <!-- iOS Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #0078D4;
+    }
+    .offline {
+      display: none;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to My PWA!</h1>
+  <p>This is a simple Progressive Web App with iOS support.</p>
+  <p class="offline">You are offline. Content may be limited.</p>
+
+  <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log('Service Worker registered', reg))
+        .catch(err => console.error('Service Worker registration failed', err));
+    }
+
+    // Handle Offline Mode
+    window.addEventListener('online', () => {
+      document.querySelector('.offline').style.display = 'none';
+    });
+    window.addEventListener('offline', () => {
+      document.querySelector('.offline').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
